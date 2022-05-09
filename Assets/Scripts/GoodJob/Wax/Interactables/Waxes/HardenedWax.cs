@@ -1,10 +1,7 @@
+using GoodJob.Wax.Controllers.Inputs;
 using GoodJob.Wax.Interactables.Interfaces;
 using GoodJob.Wax.State.Enums;
 using GoodJob.Wax.State.Managers;
-using GoodJob.Wax.Utility.Tweeening;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 namespace GoodJob.Wax.Interactables.Waxes
 {
@@ -15,14 +12,16 @@ namespace GoodJob.Wax.Interactables.Waxes
             StateManager.Instance.ChangeState(States.PullPhase);
         }
 
-        public void OnRelease(ref float distance, float threshold)
+        public void OnRelease(BendInputController bendInput)
         {
-            if (distance < threshold)
+            if (bendInput.IsPulledEnough)
             {
-                _customTween.LocalMove(transform, _defaultPosition, 2);
-                _customTween.LocalRotate(transform, _defaultRotation, 10);
+                PullWax();
             }
-            distance = 0;
+            else
+            {
+                bendInput.SetDefaultBend();
+            }
         }
     }
 }

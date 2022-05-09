@@ -1,3 +1,4 @@
+using GoodJob.Wax.Controllers.Inputs;
 using GoodJob.Wax.Interactables.Interfaces;
 using GoodJob.Wax.State.Enums;
 using GoodJob.Wax.State.Managers;
@@ -32,7 +33,7 @@ namespace GoodJob.Wax.Interactables
             CustomTween.Instance.Move(transform, pos, 0.1f);
         }
 
-        public void OnRelease(ref float distance, float threshold)
+        public void OnRelease(BendInputController bendInput)
         {
             OnStickReleased();
         }

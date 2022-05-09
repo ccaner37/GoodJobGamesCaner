@@ -39,7 +39,7 @@ namespace GoodJob
 
                 if (alpha == _nextAlpha)
                 {
-                    Destroy(gameObject);
+                    if (gameObject != null) Destroy(gameObject);
                     break;
                 }
 

@@ -1,6 +1,7 @@
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using System;
+using GoodJob.Wax.Controllers.Inputs;
 
 namespace GoodJob.Wax.Managers
 {
@@ -9,6 +10,8 @@ namespace GoodJob.Wax.Managers
         public static GameManager Instance { get; private set; }
 
         public static Action OnLevelCompleted;
+
+        public BendInputController BendInput;
 
         private void OnEnable() => Instance = this;
 

@@ -1,3 +1,4 @@
+using GoodJob.Wax.Managers;
 using GoodJob.Wax.Utility.Tweeening;
 using System;
 using System.Collections;
@@ -10,9 +11,6 @@ namespace GoodJob.Wax.Interactables.Waxes
     {
         public static Action OnWaxPulled;
 
-        protected Vector3 _defaultPosition;
-        protected Vector3 _defaultRotation;
-
         protected GameObject _defaultWax;
 
         protected CustomTween _customTween;
@@ -21,8 +19,7 @@ namespace GoodJob.Wax.Interactables.Waxes
 
         private void OnEnable()
         {
-            _defaultPosition = transform.localPosition;
-            _defaultRotation = transform.localEulerAngles;
+            GameManager.Instance.BendInput.InstallBendingComponents(gameObject);
 
             _customTween = CustomTween.Instance;
         }
