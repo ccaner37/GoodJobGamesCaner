@@ -1,6 +1,7 @@
 using GoodJob.Wax.Interactables.Waxes;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace GoodJob
@@ -22,15 +23,16 @@ namespace GoodJob
 
         private void BlushMaterialChange()
         {
-            StartCoroutine(SmoothBlushMaterialChange());
+            SmoothBlushMaterialChange();
         }
 
-        private IEnumerator SmoothBlushMaterialChange() 
+        private async void SmoothBlushMaterialChange() 
         {
-            yield return new WaitForSeconds(0.5f);
+            await Task.Delay(500);
 
             while (true)
             {
+                _speed += 0.05f;
                 float alpha = _renderer.material.GetFloat("_Alpha");
                 float nextAlpha = Mathf.Lerp(alpha, _nextAlpha, Time.deltaTime * _speed);
                 _renderer.material.SetFloat("_Alpha", nextAlpha);
@@ -38,10 +40,10 @@ namespace GoodJob
                 if (alpha == _nextAlpha)
                 {
                     Destroy(gameObject);
-                    yield break;
+                    break;
                 }
 
-                yield return null;
+                await Task.Yield();
             }
         }
     }

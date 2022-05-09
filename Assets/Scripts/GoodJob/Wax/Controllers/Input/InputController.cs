@@ -78,7 +78,7 @@ namespace GoodJob.Wax.Controllers.Inputs
             //_selectedItem.position = itemPosition;
             float distanceToScreen = Camera.main.WorldToScreenPoint(_selectedItem.transform.position).z;
             Vector3 position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, distanceToScreen));
-            Vector3 nextPosition = new Vector3(position.x, position.y, position.z);
+            Vector3 nextPosition = new Vector3(position.x, _selectedItem.position.y, position.z);
             _selectedItem.position = Vector3.Lerp(_selectedItem.position, nextPosition, Time.deltaTime * _stickDragSpeed);
         }
 

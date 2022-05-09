@@ -35,7 +35,7 @@ namespace GoodJob.Wax.Interactables.Waxes
             Destroy(gameObject.GetComponent<Rigidbody>());
             Destroy(gameObject.GetComponent<MeshCollider>());
 
-            Vector3 nextScale = Vector3.one * 0.0001f;
+            Vector3 nextScale = new Vector3(0.0001f, 0.0001f, 0.0001f);
             CustomTween.Instance.Scale(transform, nextScale, 2);
             Destroy(gameObject, 1);
 

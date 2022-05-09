@@ -14,6 +14,11 @@ namespace GoodJob.Wax.Utility.Tweeening
             Instance = this;
         }
 
+        public void Move(Transform transform, Vector3 target, float speed)
+        {
+            DoMove(transform, target, speed);
+        }
+
         public void LocalMove(Transform transform, Vector3 target, float speed)
         {
             DoLocalMove(transform, target, speed);
@@ -27,6 +32,23 @@ namespace GoodJob.Wax.Utility.Tweeening
         public void Scale(Transform transform, Vector3 target, float speed)
         {
             DoScale(transform, target, speed);
+        }
+
+        private async void DoMove(Transform transform, Vector3 target, float speed)
+        {
+            while (true)
+            {
+                if (transform == null)
+                    break;
+
+                speed += 3f;
+                transform.position = Vector3.Lerp(transform.position, target, Time.deltaTime * speed);
+
+                if (Vector3.Distance(transform.position, target) <= 0)
+                    break;
+
+                await Task.Yield();
+            }
         }
 
         private async void DoLocalMove(Transform transform, Vector3 target, float speed)

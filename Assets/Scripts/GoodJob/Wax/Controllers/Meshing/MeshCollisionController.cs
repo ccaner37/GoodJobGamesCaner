@@ -37,7 +37,8 @@ namespace GoodJob.Wax.Controllers.Meshing
 
         private void SpawnSkinBlush()
         {
-            GameObject blush = Instantiate(_skinBlush, transform.position, transform.rotation);
+            Vector3 blushPos = new Vector3(transform.position.x, transform.position.y * 0.1f, transform.position.z);
+            GameObject blush = Instantiate(_skinBlush, blushPos, transform.rotation);
             var waxMesh = gameObject.GetComponent<MeshFilter>().mesh;
             var blushMesh = blush.GetComponent<MeshFilter>().mesh;
             blushMesh.vertices = waxMesh.vertices;
