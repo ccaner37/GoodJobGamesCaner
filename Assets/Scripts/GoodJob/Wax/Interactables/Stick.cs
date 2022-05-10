@@ -29,7 +29,7 @@ namespace GoodJob.Wax.Interactables
         {
             if (_isCloseToWax) return;
             _isCloseToWax = true;
-            Vector3 pos = new Vector3(transform.position.x, transform.position.y * 0.4f, transform.position.z);
+            Vector3 pos = new Vector3(transform.position.x, transform.position.y * 0.35f, transform.position.z);
             CustomTween.Instance.Move(transform, pos, 0.1f);
         }
 
