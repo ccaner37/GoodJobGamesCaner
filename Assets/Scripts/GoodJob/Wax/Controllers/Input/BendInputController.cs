@@ -32,6 +32,8 @@ namespace GoodJob.Wax.Controllers.Inputs
 
         public bool IsPulledEnough => _upLerp > _waxPullThreshold || _downLerp > _waxPullThreshold || _leftLerp > _waxPullThreshold || _rightLerp > _waxPullThreshold;
 
+        private bool _isLerpDefault => _upBend.gizmoPos.y == _upBendY && _downBend.gizmoPos.y == _downBendY && _rightBend.gizmoPos.z == _rightBendZ && _leftBend.gizmoPos.z == _leftBendZ;
+
         private void OnEnable() => _inputController = gameObject.GetComponent<InputController>();
 
         public async void InstallBendingComponents(GameObject wax)
@@ -64,7 +66,7 @@ namespace GoodJob.Wax.Controllers.Inputs
 
             CalculateBending(ref _downBend.gizmoPos.y, ref _downLerp, targetInput.y, currentInput.y, firstInput.y, _downBendY, _bendSpeed, _upDownClamp);
 
-            CalculateBending(ref _upBend.gizmoPos.y, ref _upLerp, -targetInput.y, currentInput.y, firstInput.y, _upBendY, _bendSpeed, _upDownClamp);
+            CalculateBending(ref _upBend.gizmoPos.y, ref _upLerp, -targetInput.y * 0.5f, currentInput.y, firstInput.y, _upBendY, _bendSpeed, _upDownClamp);
 
             CalculateBending(ref _rightBend.gizmoPos.z, ref _rightLerp, targetInput.x, currentInput.x, firstInput.x, _rightBendZ, -_bendSpeed, _leftRightClamp);
 
@@ -79,12 +81,19 @@ namespace GoodJob.Wax.Controllers.Inputs
             bendGizmoPosValue = amount;
         }
 
-        public void SetDefaultBend()
+        public async void SetDefaultBend()
         {
-            _upBend.gizmoPos.y = _upBendY;
-            _downBend.gizmoPos.y = _downBendY;
-            _rightBend.gizmoPos.z = _rightBendZ;
-            _leftBend.gizmoPos.z = _leftBendZ;
+            float speed = 0.1f;
+            while (true)
+            {
+                await Task.Yield();
+                if (_isLerpDefault) break;
+                speed += 0.05f;
+                _upBend.gizmoPos.y = Mathf.Lerp(_upBend.gizmoPos.y, _upBendY, Time.deltaTime * speed);
+                _downBend.gizmoPos.y = Mathf.Lerp(_downBend.gizmoPos.y, _downBendY, Time.deltaTime * speed);
+                _rightBend.gizmoPos.z = Mathf.Lerp(_rightBend.gizmoPos.z, _rightBendZ, Time.deltaTime * speed);
+                _leftBend.gizmoPos.z = Mathf.Lerp(_leftBend.gizmoPos.z, _leftBendZ, Time.deltaTime * speed);
+            }
         }
 
         // Example code block
